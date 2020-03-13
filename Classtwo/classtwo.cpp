@@ -34,16 +34,16 @@ void drawLine(Mat src)
 	line(src, pt1, pt2, Scalar(0, 255, 0), 1);
 }
 
-void drawRect(Mat src)
+void drawRect(Mat src,int x,int y, float height)
 {
 	Rect rect;
-	rect.x = 150;
-	rect.y = 150;
-	rect.height = 100;
-	rect.width = 100;
+	rect.x = x;
+	rect.y = y;
+	rect.height = height*10000;
+	rect.width = 2;
 	rectangle(src, rect, Scalar(0, 0, 255), 1);
 }
-void calStraight(Mat src)	
+void calStraight(Mat src,Mat src2)	
 {
 	float histgram[256] = { 0 };
 	int histgrams[256] = { 0 };
@@ -74,21 +74,23 @@ void calStraight(Mat src)
 	{
 		histgram[n] = histgram[n] / (height*width);
 		cout << histgram[n] << endl;
+		drawRect(src2, n, 0, histgram[n]);
 	}
+	imshow("draw", src2);
+	waitKey(0);
 }
 
 
 int main()
 {
-	Mat src = imread("ͼƬ1.png");
-	srcSplit(src);
-	Mat src2 = Mat(300, 300, CV_8UC3);
-	drawCircle(src2);
-	drawLine(src2);
-	drawRect(src2);
-	imshow("draw", src2);
-	waitKey(0);
+	//Mat src = imread("ͼƬ1.png");
+	//srcSplit(src);
+	Mat src2 = Mat(510, 510, CV_8UC3);
+	//drawCircle(src2);
+	//drawLine(src2);
+	
+	
 	Mat src3 = imread("ͼƬ1.png",0);
-	calStraight(src3);
+	calStraight(src3,src2);
 	return 0;
 }
